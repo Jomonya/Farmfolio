@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String?
+  role         String    @default("FARMER")
+  createdAt    DateTime  @default(now())
+
+  products     Product[]
+  bookings     Booking[]
+  orders       Order[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  imageUrl    String
+  description String
+  price       Int
+  location    String
+  category    String   @default("Other")
+  createdAt   DateTime @default(now())
+
+  seller      User?    @relation(fields: [sellerId], references: [id])
+  sellerId    String?
+
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  status      String       @default("PENDING") // PENDING | PAID | FAILED | CANCELLED
+  totalAmount Int
+  buyerName   String       @default("")
+  buyerPhone  String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  user        User         @relation(fields: [userId], references: [id])
+  userId      String
+  items       OrderItem[]
+  payment     Payment?
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  name      String
+  unitPrice Int
+  quantity  Int
+
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   Int
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+model Payment {
+  id                Int      @id @default(autoincrement())
+  provider          String   @default("MPESA")
+  status            String   @default("PENDING") // PENDING | PAID | FAILED
+  amount            Int
+  phone             String
+  merchantRequestId String   @default("")
+  checkoutRequestId String   @unique
+  mpesaReceipt      String   @default("")
+  resultCode        String   @default("")
+  resultDesc        String   @default("")
+  simulated         Boolean  @default(false)
+  rawCallback       String   @default("")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  order             Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId           Int      @unique
+}
+
+model Veterinarian {
+  id             Int       @id @default(autoincrement())
+  name           String
+  imageUrl       String
+  specialization String
+  bio            String    @default("")
+  location       String    @default("")
+
+  bookings       Booking[]
+}
+
+model Booking {
+  id             Int      @id @default(autoincrement())
+  date           String
+  timeSlot       String
+  status         String   @default("PENDING")
+  notes          String   @default("")
+  createdAt      DateTime @default(now())
+
+  user           User         @relation(fields: [userId], references: [id])
+  userId         String
+  veterinarian   Veterinarian @relation(fields: [veterinarianId], references: [id])
+  veterinarianId Int
+}

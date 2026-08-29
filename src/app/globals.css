@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --color-farm-50: #f0f7f1;
+  --color-farm-100: #dcedde;
+  --color-farm-200: #bbdcc0;
+  --color-farm-300: #8dc298;
+  --color-farm-400: #57a267;
+  --color-farm-500: #0b6623;
+  --color-farm-600: #0a5a1f;
+  --color-farm-700: #08491a;
+  --color-farm-800: #073a16;
+  --color-farm-900: #062f13;
+
+  --color-cream: #fbfaf5;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --background: #fbfaf5;
+  --foreground: #16241a;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@layer utilities {
+  .container-page {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease both;
+}
