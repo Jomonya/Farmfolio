@@ -61,12 +61,9 @@ export default async function HomePage() {
               <Stat value={`${vetCount}`} label="Vets on call" />
               <Stat value="24/7" label="Records access" />
             </div>
-            <blockquote className="mt-6 border-t border-white/20 pt-6">
-              <p className="text-lg">"{TESTIMONIAL.quote}"</p>
-              <footer className="mt-3 text-sm text-farm-100">
-                {TESTIMONIAL.author}, {TESTIMONIAL.title}
-              </footer>
-            </blockquote>
+            <p className="mt-6 border-t border-white/20 pt-6 text-lg">
+              {TESTIMONIAL.quote}
+            </p>
           </div>
         </div>
       </section>

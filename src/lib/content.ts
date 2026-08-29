@@ -17,8 +17,6 @@ export const PRODUCT_CATEGORIES = [
 
 export const TESTIMONIAL = {
   quote: "All your farm management needs in one platform.",
-  author: "John Doe",
-  title: "Co-Founder and CEO",
 };
 
 export const FEATURED_ARTICLE = {
