@@ -8,6 +8,8 @@ import {
   TESTIMONIAL,
 } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const [products, vetCount] = await Promise.all([
     prisma.product.findMany({ orderBy: { createdAt: "desc" }, take: 3 }),

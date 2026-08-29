@@ -10,9 +10,9 @@ export async function GET(req: Request) {
       where: q
         ? {
             OR: [
-              { name: { contains: q } },
-              { specialization: { contains: q } },
-              { location: { contains: q } },
+              { name: { contains: q, mode: "insensitive" } },
+              { specialization: { contains: q, mode: "insensitive" } },
+              { location: { contains: q, mode: "insensitive" } },
             ],
           }
         : undefined,
